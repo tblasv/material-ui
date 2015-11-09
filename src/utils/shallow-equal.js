@@ -1,4 +1,4 @@
-export default function shallowEqual(objA, objB) {
+module.exports = function shallowEqual(objA, objB) {
   if (objA === objB) {
     return true;
   }
@@ -24,4 +24,4 @@ export default function shallowEqual(objA, objB) {
   }
 
   return true;
-}
+};
