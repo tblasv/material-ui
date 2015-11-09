@@ -20,6 +20,8 @@ const Toggle = React.createClass({
     onToggle: React.PropTypes.func,
     toggled: React.PropTypes.bool,
     defaultToggled: React.PropTypes.bool,
+    trackStyleWhenSwitched: React.PropTypes.object,
+    thumbStyleWhenSwitched: React.PropTypes.object
   },
 
   //for passing default theme context to children
@@ -118,6 +120,7 @@ const Toggle = React.createClass({
       styles.track,
       this.props.trackStyle,
       this.state.switched && styles.trackWhenSwitched,
+      this.state.switched && this.props.trackStyleWhenSwitched,
       this.props.disabled && styles.trackWhenDisabled
     );
 
@@ -125,6 +128,7 @@ const Toggle = React.createClass({
       styles.thumb,
       this.props.thumbStyle,
       this.state.switched && styles.thumbWhenSwitched,
+      this.state.switched && this.props.thumbStyleWhenSwitched,
       this.props.disabled && styles.thumbWhenDisabled
     );
 
