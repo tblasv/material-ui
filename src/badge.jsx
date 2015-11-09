@@ -5,7 +5,7 @@ const ThemeManager = require('./styles/theme-manager');
 const StylePropable = require('./mixins/style-propable');
 
 // Badge
-export default React.createClass({
+const Badge = React.createClass({
   displayName: 'Badge',
   mixins: [StylePropable],
   contextTypes: {
@@ -104,3 +104,6 @@ export default React.createClass({
     );
   },
 });
+
+
+module.exports = Badge;

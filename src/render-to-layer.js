@@ -1,8 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Events from './utils/events';
-import Dom from './utils/dom';
-import debounce from 'lodash.debounce';
+const React = require('react');
+const ReactDOM = require('react-dom');
+const Events = require('./utils/events');
+const Dom = require('./utils/dom');
+const debounce = require('lodash.debounce');
 
 // heavily inspired by https://github.com/Khan/react-components/blob/master/js/layered-component-mixin.jsx
 const RenderToLayer = React.createClass({
@@ -120,4 +120,4 @@ const RenderToLayer = React.createClass({
   },
 });
 
-export default RenderToLayer;
+module.exports = RenderToLayer;
