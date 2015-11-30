@@ -2,7 +2,7 @@ const InlineStylePrefixer = require ('inline-style-prefixer');
 
 const prefixers = {};
 
-export default {
+module.exports = {
 
   getPrefixer() {
     // Server-side renderer needs to supply user agent

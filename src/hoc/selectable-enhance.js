@@ -4,7 +4,7 @@ const StylePropable = require('../mixins/style-propable');
 const ColorManipulator = require('../utils/color-manipulator');
 const DefaultRawTheme = require('../styles/raw-themes/light-raw-theme');
 
-export const SelectableContainerEnhance = (Component) => {
+module.exports.SelectableContainerEnhance = (Component) => {
   let composed = React.createClass({
 
     mixins: [StylePropable],
