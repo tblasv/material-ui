@@ -1,8 +1,7 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const { Styles } = require('material-ui');
-const { Spacing } = Styles;
-const { ThemeManager } = Styles;
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {Styles} from 'material-ui';
+const {ThemeManager} = Styles;
 const DefaultRawTheme = Styles.LightRawTheme;
 
 
@@ -17,19 +16,19 @@ const CodeBlock = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
   },
 
-  getInitialState () {
+  getInitialState() {
     return {
       muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
     };
   },
 
-  componentWillReceiveProps (nextProps, nextContext) {
+  componentWillReceiveProps(nextProps, nextContext) {
     let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
     this.setState({muiTheme: newMuiTheme});
   },
@@ -37,17 +36,17 @@ const CodeBlock = React.createClass({
   componentDidMount() {
     let code = ReactDOM.findDOMNode(this.refs.code);
     require([
-      "codemirror/lib/codemirror.js",
-      "codemirror/mode/htmlmixed/htmlmixed.js",
-    ], function(Codemirror){
+      'codemirror/lib/codemirror.js',
+      'codemirror/mode/htmlmixed/htmlmixed.js',
+    ], function(Codemirror) {
       Codemirror.fromTextArea(code, {
-        mode: "htmlmixed",
+        mode: 'htmlmixed',
         readOnly: true,
       });
     });
   },
 
-  shouldComponentUpdate({children}, nextState){
+  shouldComponentUpdate({children}) {
     return this.props.children !== children;
   },
 

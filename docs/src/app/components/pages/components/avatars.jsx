@@ -1,10 +1,11 @@
-let React = require('react');
-let { Avatar, FontIcon, List, ListItem, Styles } = require('material-ui');
-let ComponentDoc = require('../../component-doc');
-let FileFolder = require('svg-icons/file/folder');
-let { Colors } = Styles;
-let Code = require('avatars-code');
-let CodeExample = require('../../code-example/code-example');
+import React from 'react';
+import {Avatar, FontIcon, List, ListItem, Styles, Paper} from 'material-ui';
+import ComponentDoc from '../../component-doc';
+import FileFolder from 'svg-icons/file/folder';
+const {Colors} = Styles;
+import Code from 'avatars-code';
+import CodeExample from '../../code-example/code-example';
+import CodeBlock from '../../code-example/code-block';
 
 
 export default class AvatarsPage extends React.Component {
@@ -70,6 +71,16 @@ export default class AvatarsPage extends React.Component {
         name="Avatars"
         desc={desc}
         componentInfo={componentInfo}>
+
+        <Paper style = {{marginBottom: '22px'}}>
+          <CodeBlock>
+          {
+            '//Import statement:\nimport Avatar from \'material-ui/lib/avatar\';\n\n' +
+            '//See material-ui/lib/index.js for more\n'
+          }
+          </CodeBlock>
+        </Paper>
+
         <CodeExample code={Code}>
           <List>
             <ListItem leftAvatar={imageAvatar} disabled={true}>Image Avatar</ListItem>

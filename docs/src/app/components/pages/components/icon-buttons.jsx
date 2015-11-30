@@ -1,11 +1,10 @@
-let React = require('react');
-let { FontIcon, IconButton, NavigationMenu } = require('material-ui');
-let ComponentDoc = require('../../component-doc');
-let ActionGrade = require('svg-icons/action/grade');
-let ActionHome = require('svg-icons/action/home');
-let Code = require('icon-buttons-code');
-let CodeExample = require('../../code-example/code-example');
-
+import React from 'react';
+import {FontIcon, IconButton, Paper} from 'material-ui';
+import ComponentDoc from '../../component-doc';
+import ActionGrade from 'svg-icons/action/grade';
+import Code from 'icon-buttons-code';
+import CodeExample from '../../code-example/code-example';
+import CodeBlock from '../../code-example/code-block';
 
 export default class IconButtonsPage extends React.Component {
 
@@ -106,6 +105,11 @@ export default class IconButtonsPage extends React.Component {
             header: 'IconButton.onFocus(e)',
             desc: 'Callback function for when the component gains focus.',
           },
+          {
+            name: 'onTouchTap',
+            header: 'IconButton.onTouchTap(e)',
+            desc: 'Callback function for when a touch tap / click event occurs on the button.',
+          },
         ],
       },
     ];
@@ -115,8 +119,18 @@ export default class IconButtonsPage extends React.Component {
         name="Icon Buttons"
         desc={desc}
         componentInfo={componentInfo}>
+
+        <Paper style = {{marginBottom: '22px'}}>
+          <CodeBlock>
+          {
+            '//Import statement:\nimport IconButton from \'material-ui/lib/icon-button\';\n\n' +
+            '//See material-ui/lib/index.js for more\n'
+          }
+          </CodeBlock>
+        </Paper>
+
         <CodeExample code={Code}>
-          <IconButton iconClassName="muidocs-icon-custom-github" tooltip="bottom-right"  tooltipPosition = "bottom-right" />
+          <IconButton iconClassName="muidocs-icon-custom-github" tooltip="bottom-right" tooltipPosition = "bottom-right" />
 
           <IconButton iconClassName="muidocs-icon-custom-github" tooltip="bottom-center" tooltipPosition = "bottom-center" />
 

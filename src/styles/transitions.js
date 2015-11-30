@@ -1,5 +1,3 @@
-let AutoPrefix = require('./auto-prefix');
-
 module.exports = {
 
   easeOutFunction: 'cubic-bezier(0.23, 1, 0.32, 1)',
@@ -30,7 +28,7 @@ module.exports = {
     duration = duration || '450ms';
     property = property || 'all';
     delay = delay || '0ms';
-    easeFunction = easeFunction || "linear";
+    easeFunction = easeFunction || 'linear';
 
     return property + ' ' +
       duration + ' ' +

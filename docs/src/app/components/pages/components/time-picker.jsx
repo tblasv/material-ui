@@ -1,11 +1,11 @@
-let React = require('react');
-let { TimePicker } = require('material-ui');
-let ComponentDoc = require('../../component-doc');
-let Code = require('time-picker-code');
-let CodeExample = require('../../code-example/code-example');
+import React from 'react';
+import {TimePicker, Paper} from 'material-ui';
+import ComponentDoc from '../../component-doc';
+import Code from 'time-picker-code';
+import CodeExample from '../../code-example/code-example';
+import CodeBlock from '../../code-example/code-block';
 
-
-let TimePickerPage = React.createClass({
+const TimePickerPage = React.createClass({
 
   render() {
 
@@ -15,13 +15,13 @@ let TimePickerPage = React.createClass({
         infoArray: [
           {
             name: 'autoOk',
-            type: 'boolean',
+            type: 'bool',
             header: 'default: false',
             desc: 'If true, automatically accept and close the picker on set minutes.',
           },
           {
             name: 'defaultTime',
-            type: 'date object',
+            type: 'instanceOf(Date)',
             header: 'optional',
             desc: 'This is the initial time value of the component.',
           },
@@ -33,7 +33,7 @@ let TimePickerPage = React.createClass({
           },
           {
             name: 'format',
-            type: 'one of: ampm, 24hr',
+            type: 'oneOf ["ampm", "24hr"]',
             header: 'default: ampm',
             desc: 'Tells the component to display the picker in ampm (12hr) format or 24hr format.',
           },
@@ -45,7 +45,7 @@ let TimePickerPage = React.createClass({
           },
           {
             name: 'pedantic',
-            type: 'boolean',
+            type: 'bool',
             header: 'default: false',
             desc: 'It\'s technically more correct to refer to "12 noon" and "12 midnight" rather than "12 a.m." and "12 p.m." and it avoids real confusion between different locales. By default (for compatibility reasons) TimePicker uses (12 a.m./12 p.m.) To use (noon/midnight) set pedantic={true}.',
           },
@@ -131,6 +131,16 @@ let TimePickerPage = React.createClass({
       <ComponentDoc
         name="Time Picker"
         componentInfo={componentInfo}>
+
+        <Paper style = {{marginBottom: '22px'}}>
+          <CodeBlock>
+          {
+            '//Import statement:\nimport TimePicker from \'material-ui/lib/time-picker\';\n\n' +
+            '//See material-ui/lib/index.js for more\n'
+          }
+          </CodeBlock>
+        </Paper>
+
         <CodeExample code={Code}>
           <TimePicker
             ref="picker12hr"
@@ -142,7 +152,7 @@ let TimePickerPage = React.createClass({
             ref="picker24hr"
             format="24hr"
             hintText="24hr Format"
-            onChange={this._changeTimePicker12}  />
+            onChange={this._changeTimePicker12} />
 
           <TimePicker
             ref="pickerAutoOk"
@@ -154,23 +164,23 @@ let TimePickerPage = React.createClass({
             ref="pickerTextfieldStyle"
             format="24hr"
             hintText="Override text field style"
-            textFieldStyle={{ fontSize: 'x-large' }} />
+            textFieldStyle={{fontSize: 'x-large'}} />
 
           <TimePicker
             ref="pickerStyle"
             format="24hr"
             hintText="Override style"
-            textFieldStyle={{ width: '80%' }}
-            style={{ padding: '5px', borderRadius: '5px', backgroundColor: '#d1d1d1' }} />
+            textFieldStyle={{width: '80%'}}
+            style={{padding: '5px', borderRadius: '5px', backgroundColor: '#d1d1d1'}} />
 
         </CodeExample>
       </ComponentDoc>
     );
   },
-  _changeTimePicker24(err, t){
+  _changeTimePicker24(err, t) {
     this.refs.picker24hr.setTime(t);
   },
-  _changeTimePicker12(err, t){
+  _changeTimePicker12(err, t) {
     this.refs.picker12hr.setTime(t);
   },
 

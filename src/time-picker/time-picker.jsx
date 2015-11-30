@@ -3,11 +3,15 @@ const StylePropable = require('../mixins/style-propable');
 const WindowListenable = require('../mixins/window-listenable');
 const TimePickerDialog = require('./time-picker-dialog');
 const TextField = require('../text-field');
+const ThemeManager = require('../styles/theme-manager');
+const DefaultRawTheme = require('../styles/raw-themes/light-raw-theme');
 
 
 let emptyTime = new Date();
 emptyTime.setHours(0);
 emptyTime.setMinutes(0);
+emptyTime.setSeconds(0);
+emptyTime.setMilliseconds(0);
 
 
 const TimePicker = React.createClass({
@@ -50,6 +54,7 @@ const TimePicker = React.createClass({
     return {
       time: this.props.defaultTime || emptyTime,
       dialogTime: new Date(),
+      muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
     };
   },
 
@@ -57,30 +62,30 @@ const TimePicker = React.createClass({
     let hours = date.getHours();
     let mins = date.getMinutes().toString();
 
-    if (this.props.format === "ampm"){
+    if (this.props.format === 'ampm') {
       let isAM = hours < 12;
       hours = hours % 12;
-      let additional = isAM ? " am" : " pm";
+      let additional = isAM ? ' am' : ' pm';
       hours = (hours || 12).toString();
 
-      if (mins.length < 2 ) mins = "0" + mins;
+      if (mins.length < 2 ) mins = '0' + mins;
 
       if (this.props.pedantic) {
         // Treat midday/midnight specially http://www.nist.gov/pml/div688/times.cfm
-        if (hours === "12" && mins === "00") {
-          return additional === " pm" ? "12 noon" : "12 midnight";
+        if (hours === '12' && mins === '00') {
+          return additional === ' pm' ? '12 noon' : '12 midnight';
         }
       }
 
-      return hours + (mins === "00" ? "" : ":" + mins) + additional;
+      return hours + (mins === '00' ? '' : ':' + mins) + additional;
     }
 
     hours = hours.toString();
 
-    if (hours.length < 2) hours = "0" + hours;
-    if (mins.length < 2) mins = "0" + mins;
+    if (hours.length < 2) hours = '0' + hours;
+    if (mins.length < 2) mins = '0' + mins;
 
-    return hours + ":" + mins;
+    return hours + ':' + mins;
   },
 
   render() {
@@ -128,10 +133,19 @@ const TimePicker = React.createClass({
   },
 
   setTime(t) {
-    this.setState({
-      time: t,
-    });
-    this.refs.input.setValue(this.formatTime(t));
+    if (t) {
+      this.setState({
+        time: t,
+      });
+
+      this.refs.input.setValue(this.formatTime(t));
+    } else {
+      this.setState({
+        time: emptyTime,
+      });
+
+      this.refs.input.setValue(null);
+    }
   },
 
   /**

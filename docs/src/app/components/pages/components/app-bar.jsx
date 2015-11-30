@@ -1,14 +1,21 @@
-let React = require('react');
-let { AppBar, DropDownMenu } = require('material-ui');
-let IconButton = require('icon-button');
-let NavigationClose = require('svg-icons/navigation/close');
-let FlatButton = require('flat-button');
-let ComponentDoc = require('../../component-doc');
-let CodeExample = require('../../code-example/code-example');
-let Code = require('app-bar-code');
-const IconMenu = require('menus/icon-menu');
-const MenuItem = require('menus/menu-item');
-const MoreVertIcon = require('svg-icons/navigation/more-vert');
+import React from 'react';
+import {AppBar, Paper} from 'material-ui';
+import IconButton from 'icon-button';
+import NavigationClose from 'svg-icons/navigation/close';
+import FlatButton from 'flat-button';
+import ComponentDoc from '../../component-doc';
+import CodeExample from '../../code-example/code-example';
+import CodeBlock from '../../code-example/code-block';
+import Code from 'app-bar-code';
+import IconMenu from 'menus/icon-menu';
+import MenuItem from 'menus/menu-item';
+import MoreVertIcon from 'svg-icons/navigation/more-vert';
+
+const styles = {
+  title: {
+    cursor: 'pointer',
+  },
+};
 
 export default class AppBarPage extends React.Component {
 
@@ -67,7 +74,7 @@ export default class AppBarPage extends React.Component {
           },
           {
             name: 'showMenuIconButton',
-            type: 'boolean',
+            type: 'bool',
             header: 'default: true',
             desc: 'Determines whether or not to display the Menu icon next to ' +
                   'the title. Setting this prop to false will hide the icon.',
@@ -80,7 +87,7 @@ export default class AppBarPage extends React.Component {
           },
           {
             name: 'zDepth',
-            type: 'number',
+            type: 'oneOf [0,1,2,3,4,5]',
             header: 'default: 1',
             desc: 'The zDepth of the app bar. The shadow of the app bar is also ' +
                   'dependent on this property.',
@@ -102,6 +109,12 @@ export default class AppBarPage extends React.Component {
             desc: 'Callback function for when the right icon is selected via ' +
                   'a touch tap.',
           },
+          {
+            name: 'onTitleTouchTap',
+            header: 'AppBar.onTitleTouchTap(e)',
+            desc: 'Callback function for when the title text is selected via ' +
+                  'a touch tap.',
+          },
         ],
       },
     ];
@@ -113,13 +126,26 @@ export default class AppBarPage extends React.Component {
         name="AppBar"
         desc={this.desc}
         componentInfo={this.componentInfo}>
+
+        <Paper style = {{marginBottom: '22px'}}>
+          <CodeBlock>
+          {
+            `//Import statement:
+import AppBar from 'material-ui/lib/app-bar';
+
+//See material-ui/lib/index.js for more
+            `
+          }
+          </CodeBlock>
+        </Paper>
+
         <CodeExample code={Code}>
           <AppBar
             title="Title"
             iconClassNameRight="muidocs-icon-navigation-expand-more" />
           <br />
           <AppBar
-            title="Title"
+            title={<span style={styles.title} onTouchTap={this._onTouchTap}>Title</span>}
             iconElementLeft={<IconButton><NavigationClose /></IconButton>}
             iconElementRight={<FlatButton label="Save" />} />
           <br />
@@ -127,9 +153,13 @@ export default class AppBarPage extends React.Component {
             title="Title"
             iconElementLeft={<IconButton><NavigationClose /></IconButton>}
             iconElementRight={
-              <IconMenu iconButtonElement={
-                <IconButton><MoreVertIcon /></IconButton>
-              }>
+              <IconMenu
+                iconButtonElement={
+                  <IconButton><MoreVertIcon /></IconButton>
+                }
+                targetOrigin={{horizontal:'right', vertical:'top'}}
+                anchorOrigin={{horizontal:'right', vertical:'top'}}
+              >
                 <MenuItem primaryText="Refresh" />
                 <MenuItem primaryText="Help" />
                 <MenuItem primaryText="Sign out" />
@@ -138,6 +168,10 @@ export default class AppBarPage extends React.Component {
         </CodeExample>
       </ComponentDoc>
     );
+  }
+
+  _onTouchTap() {
+    alert('onTouchTap triggered on the title component');
   }
 
 }

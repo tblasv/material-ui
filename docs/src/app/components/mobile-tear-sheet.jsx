@@ -1,6 +1,6 @@
-const React = require('react');
-const {Mixins} = require('material-ui');
-const { StylePropable } = Mixins;
+import React from 'react';
+import {Mixins} from 'material-ui';
+const {StylePropable} = Mixins;
 
 
 const MobileTearSheet = React.createClass({

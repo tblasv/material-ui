@@ -1,6 +1,7 @@
 module.exports = {
   AppBar: require('./app-bar'),
   AppCanvas: require('./app-canvas'),
+  AutoComplete: require('./auto-complete'),
   Avatar: require('./avatar'),
   Badge: require('./badge'),
   BeforeAfterWrapper: require('./before-after-wrapper'),
@@ -37,12 +38,14 @@ module.exports = {
   Mixins: require('./mixins/'),
   Overlay: require('./overlay'),
   Paper: require('./paper'),
+  Popover:require('./popover/popover'),
   RadioButton: require('./radio-button'),
   RadioButtonGroup: require('./radio-button-group'),
   RaisedButton: require('./raised-button'),
   RefreshIndicator: require('./refresh-indicator'),
   Ripples: require('./ripples/'),
   SelectField: require('./select-field'),
+  SelectableContainerEnhance: require('./hoc/selectable-enhance'),
   Slider: require('./slider'),
   SvgIcon: require('./svg-icon'),
   Icons: {

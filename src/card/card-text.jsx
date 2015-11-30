@@ -1,5 +1,4 @@
 const React = require('react');
-const Styles = require('../styles');
 const StylePropable = require('../mixins/style-propable');
 const ThemeManager = require('../styles/theme-manager');
 const DefaultRawTheme = require('../styles/raw-themes/light-raw-theme');
@@ -7,7 +6,7 @@ const DefaultRawTheme = require('../styles/raw-themes/light-raw-theme');
 
 const CardText = React.createClass({
 
-  mixins:[StylePropable],
+  mixins: [StylePropable],
 
   contextTypes: {
     muiTheme: React.PropTypes.object,
@@ -18,7 +17,7 @@ const CardText = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
@@ -32,7 +31,7 @@ const CardText = React.createClass({
 
   //to update theme inside state whenever a new theme is passed down
   //from the parent / owner using context
-  componentWillReceiveProps (nextProps, nextContext) {
+  componentWillReceiveProps(nextProps, nextContext) {
     let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
     this.setState({muiTheme: newMuiTheme});
   },

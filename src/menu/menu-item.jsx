@@ -37,6 +37,9 @@ const MenuItem = React.createClass({
     selected: React.PropTypes.bool,
     style: React.PropTypes.object,
     active: React.PropTypes.bool,
+    onMouseLeave: React.PropTypes.func,
+    onMouseEnter: React.PropTypes.func,
+    icon: React.PropTypes.node,
   },
 
   //for passing default theme context to children
@@ -44,13 +47,13 @@ const MenuItem = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
   },
 
-  getInitialState () {
+  getInitialState() {
     return {
       muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
     };
@@ -58,7 +61,7 @@ const MenuItem = React.createClass({
 
   //to update theme inside state whenever a new theme is passed down
   //from the parent / owner using context
-  componentWillReceiveProps (nextProps, nextContext) {
+  componentWillReceiveProps(nextProps, nextContext) {
     let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
     this.setState({muiTheme: newMuiTheme});
   },
@@ -75,6 +78,12 @@ const MenuItem = React.createClass({
     };
   },
 
+  componentWillUnmount() {
+    if (this.state.open) {
+      this.setState({open:false});
+    }
+  },
+
   getTheme() {
     return this.state.muiTheme.menuItem;
   },
@@ -87,10 +96,10 @@ const MenuItem = React.createClass({
     const isRtl = this.context.muiTheme.isRtl;
 
     const right = isRtl ? 'left' : 'right';
-    const left  = isRtl ? 'right' : 'left';
+    const left = isRtl ? 'right' : 'left';
 
-    const marginRight = isRtl ? 'marginLeft': 'marginRight';
-    const paddingLeft = isRtl ? 'paddingRight': 'paddingLeft';
+    const marginRight = isRtl ? 'marginLeft' : 'marginRight';
+    const paddingLeft = isRtl ? 'paddingRight' : 'paddingLeft';
 
     let styles = {
       root: {

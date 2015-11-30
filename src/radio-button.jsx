@@ -20,13 +20,13 @@ const RadioButton = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
   },
 
-  getInitialState () {
+  getInitialState() {
     return {
       muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
     };
@@ -34,7 +34,7 @@ const RadioButton = React.createClass({
 
   //to update theme inside state whenever a new theme is passed down
   //from the parent / owner using context
-  componentWillReceiveProps (nextProps, nextContext) {
+  componentWillReceiveProps(nextProps, nextContext) {
     let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
     this.setState({muiTheme: newMuiTheme});
   },
@@ -43,6 +43,10 @@ const RadioButton = React.createClass({
     iconStyle: React.PropTypes.object,
     labelStyle: React.PropTypes.object,
     onCheck: React.PropTypes.func,
+    checked: React.PropTypes.bool,
+    labelPosition: React.PropTypes.oneOf(['left', 'right']),
+    disabled: React.PropTypes.bool,
+    value: React.PropTypes.string,
   },
 
   getTheme() {
@@ -52,23 +56,23 @@ const RadioButton = React.createClass({
   getStyles() {
     let styles = {
       icon: {
-          height: this.getTheme().size,
-          width: this.getTheme().size,
+        height: this.getTheme().size,
+        width: this.getTheme().size,
       },
       target: {
-          transition: Transitions.easeOut(),
-          position: 'absolute',
-          opacity: 1,
-          transform: 'scale(1)',
-          fill: this.getTheme().borderColor,
+        transition: Transitions.easeOut(),
+        position: 'absolute',
+        opacity: 1,
+        transform: 'scale(1)',
+        fill: this.getTheme().borderColor,
       },
       fill: {
-          position: 'absolute',
-          opacity: 1,
-          transform: 'scale(0)',
-          transformOrigin: '50% 50%',
-          transition: Transitions.easeOut(),
-          fill: this.getTheme().checkedColor,
+        position: 'absolute',
+        opacity: 1,
+        transform: 'scale(0)',
+        transformOrigin: '50% 50%',
+        transition: Transitions.easeOut(),
+        fill: this.getTheme().checkedColor,
       },
       targetWhenChecked: {
         opacity: 0,
@@ -132,8 +136,8 @@ const RadioButton = React.createClass({
     );
 
     let enhancedSwitchProps = {
-      ref: "enhancedSwitch",
-      inputType: "radio",
+      ref: 'enhancedSwitch',
+      inputType: 'radio',
       switched: this.props.checked || false,
       switchElement: radioButtonElement,
       rippleColor: rippleColor,
@@ -141,7 +145,7 @@ const RadioButton = React.createClass({
       labelStyle: labelStyle,
       onSwitch: this._handleCheck,
       onParentShouldUpdate: this._handleStateChange,
-      labelPosition: (this.props.labelPosition) ? this.props.labelPosition : "right",
+      labelPosition: (this.props.labelPosition) ? this.props.labelPosition : 'right',
     };
 
     return (

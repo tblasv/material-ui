@@ -1,10 +1,11 @@
-let React = require('react');
-let CodeExample = require('../../code-example/code-example');
-let {IconButton, Slider, Styles, Tab, Tabs } = require('material-ui');
-let ComponentDoc = require('../../component-doc');
-let { Colors, Typography } = Styles;
-let Code = require('tabs-code');
-const SwipeableViews = require('react-swipeable-views');
+import React from 'react';
+import CodeExample from '../../code-example/code-example';
+import {IconButton, Slider, Styles, Tab, Tabs, Paper} from 'material-ui';
+import ComponentDoc from '../../component-doc';
+const {Colors, Typography} = Styles;
+import Code from 'tabs-code';
+import SwipeableViews from 'react-swipeable-views';
+import CodeBlock from '../../code-example/code-block';
 
 export default class TabsPage extends React.Component {
 
@@ -17,7 +18,7 @@ export default class TabsPage extends React.Component {
     };
   }
 
-  render(){
+  render() {
     let desc = 'Tabs can now operate in two different modes: controlled and uncontrolled. ' +
       'The uncontrolled mode takes over automatically if no value prop is passed to your' +
       'Tabs and Tab components. If you want controllable tabs, passing a value to both the' +
@@ -66,7 +67,7 @@ export default class TabsPage extends React.Component {
           },
           {
             name: 'value',
-            type: 'string or number',
+            type: 'oneOfType [string, number]',
             header: 'optional',
             desc: 'Makes Tabs controllable and selects the tab whose value prop matches this prop.',
           },
@@ -163,6 +164,17 @@ export default class TabsPage extends React.Component {
         name="Tabs"
         desc={desc}
         componentInfo={componentInfo}>
+
+        <Paper style = {{marginBottom: '22px'}}>
+          <CodeBlock>
+          {
+            '//Import statement:\nimport Tabs from \'material-ui/lib/tabs/tabs\';\n' +
+            'import Tab from \'material-ui/lib/tabs/tab\';\n\n' +
+            '//See material-ui/lib/index.js for more\n'
+          }
+          </CodeBlock>
+        </Paper>
+
         <CodeExample code={Code}>
           <Tabs>
             <Tab label="Item One" >
@@ -272,11 +284,11 @@ export default class TabsPage extends React.Component {
     this.setState({tabsValue: 'c'});
   }
 
-  _handleTabActive(tab){
+  _handleTabActive(tab) {
     this.props.history.pushState(null, tab.props.route);
   }
 
-  _handleTabsChange(value, e, tab){
+  _handleTabsChange(value) {
     this.setState({tabsValue: value});
   }
 }

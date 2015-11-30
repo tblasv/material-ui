@@ -1,8 +1,8 @@
-let React = require('react');
-let mui = require('material-ui');
-let ComponentDoc = require('../../component-doc');
+import React from 'react';
+import mui from 'material-ui';
+import ComponentDoc from '../../component-doc';
 
-let {
+const {
   DropDownIcon,
   DropDownMenu,
   FontIcon,
@@ -11,10 +11,11 @@ let {
   ToolbarGroup,
   ToolbarSeparator,
   ToolbarTitle,
+  Paper,
 } = mui;
-let Code = require('toolbars-code');
-let CodeExample = require('../../code-example/code-example');
-
+import Code from 'toolbars-code';
+import CodeExample from '../../code-example/code-example';
+import CodeBlock from '../../code-example/code-block';
 
 export default class ToolbarPage extends React.Component {
 
@@ -91,17 +92,17 @@ export default class ToolbarPage extends React.Component {
     ];
 
     let filterOptions = [
-      { payload: '1', text: 'All Broadcasts' },
-      { payload: '2', text: 'All Voice' },
-      { payload: '3', text: 'All Text' },
-      { payload: '4', text: 'Complete Voice' },
-      { payload: '5', text: 'Complete Text' },
-      { payload: '6', text: 'Active Voice' },
-      { payload: '7', text: 'Active Text' },
+      {payload: '1', text: 'All Broadcasts'},
+      {payload: '2', text: 'All Voice'},
+      {payload: '3', text: 'All Text'},
+      {payload: '4', text: 'Complete Voice'},
+      {payload: '5', text: 'Complete Text'},
+      {payload: '6', text: 'Active Voice'},
+      {payload: '7', text: 'Active Text'},
     ];
     let iconMenuItems = [
-      { payload: '1', text: 'Download' },
-      { payload: '2', text: 'More Info' },
+      {payload: '1', text: 'Download'},
+      {payload: '2', text: 'More Info'},
     ];
 
     return (
@@ -109,6 +110,19 @@ export default class ToolbarPage extends React.Component {
         name="Toolbars"
         desc={desc}
         componentInfo={componentInfo}>
+
+        <Paper style = {{marginBottom: '22px'}}>
+          <CodeBlock>
+          {
+            '//Import statement:\nimport Toolbar from \'material-ui/lib/toolbar/toolbar\';\n' +
+            'import ToolbarGroup from \'material-ui/lib/toolbar/toolbar-group\';\n' +
+            'import ToolbarSeparator from \'material-ui/lib/toolbar/toolbar-separator\';\n' +
+            'import ToolbarTitle from \'material-ui/lib/toolbar/toolbar-title\';\n\n' +
+            '//See material-ui/lib/index.js for more\n'
+          }
+          </CodeBlock>
+        </Paper>
+
         <CodeExample code={Code}>
           <Toolbar>
             <ToolbarGroup key={0} float="left">
