@@ -1,15 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import WindowListenable from '../mixins/window-listenable';
-import RenderToLayer from '../render-to-layer';
-import StylePropable from '../mixins/style-propable';
-import CssEvent from '../utils/css-event';
-import PropTypes from '../utils/prop-types';
-import Transitions from '../styles/transitions';
-import Paper from '../paper';
-import throttle from 'lodash.throttle';
-import AutoPrefix from '../styles/auto-prefix';
-import ContextPure from '../mixins/context-pure';
+var React = require('react');
+var ReactDOM = require('react-dom');
+var WindowListenable = require('../mixins/window-listenable');
+var RenderToLayer = require('../render-to-layer');
+var StylePropable = require('../mixins/style-propable');
+var CssEvent = require('../utils/css-event');
+var PropTypes = require('../utils/prop-types');
+var Transitions = require('../styles/transitions');
+var Paper = require('../paper');
+var throttle = require('lodash.throttle');
+var AutoPrefix = require('../styles/auto-prefix');
+var ContextPure = require('../mixins/context-pure');
 
 const Popover = React.createClass({
   mixins: [
