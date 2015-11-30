@@ -333,4 +333,4 @@ const Popover = React.createClass({
 
 });
 
-export default Popover;
+module.exports = Popover;
