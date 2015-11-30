@@ -40,7 +40,7 @@ const EnhancedTextarea = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
@@ -53,6 +53,7 @@ const EnhancedTextarea = React.createClass({
     rows: React.PropTypes.number,
     rowsMax: React.PropTypes.number,
     style: React.PropTypes.object,
+    value: React.PropTypes.string,
   },
 
   getDefaultProps() {
@@ -136,7 +137,7 @@ const EnhancedTextarea = React.createClass({
 
     let newHeight = shadow.scrollHeight;
 
-    if (this.props.rowsMax > this.props.rows) {
+    if (this.props.rowsMax >= this.props.rows) {
       newHeight = Math.min(this.props.rowsMax * rowsHeight, newHeight);
     }
 

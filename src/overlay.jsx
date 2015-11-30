@@ -22,13 +22,13 @@ const Overlay = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
   },
 
-  getInitialState () {
+  getInitialState() {
     return {
       muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
     };
@@ -36,36 +36,33 @@ const Overlay = React.createClass({
 
   //to update theme inside state whenever a new theme is passed down
   //from the parent / owner using context
-  componentWillReceiveProps (nextProps, nextContext) {
+  componentWillReceiveProps(nextProps, nextContext) {
     let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
     this.setState({muiTheme: newMuiTheme});
+    if (this.props.show !== nextProps.show) {
+      this._applyAutoLockScrolling(nextProps);
+    }
   },
 
   propTypes: {
     autoLockScrolling: React.PropTypes.bool,
-    show: React.PropTypes.bool,
-    transitionEnabled: React.PropTypes.bool,
+    show: React.PropTypes.bool.isRequired,
     style: React.PropTypes.object,
+    transitionEnabled: React.PropTypes.bool,
   },
 
   getDefaultProps() {
     return {
       autoLockScrolling: true,
       transitionEnabled: true,
+      style:{},
     };
   },
 
   componentDidMount() {
     this._originalBodyOverflow = document.getElementsByTagName('body')[0].style.overflow;
-  },
-
-  componentDidUpdate() {
-    if (this.props.autoLockScrolling) {
-      if (this.props.show) {
-        this._preventScrolling();
-      } else {
-        this._allowScrolling();
-      }
+    if (this.props.show) {
+      this._applyAutoLockScrolling(this.props);
     }
   },
 
@@ -126,12 +123,14 @@ const Overlay = React.createClass({
     );
   },
 
-  preventScrolling() {
-    if (!this.props.autoLockScrolling) this._preventScrolling();
-  },
-
-  allowScrolling() {
-    if (!this.props.autoLockScrolling) this._allowScrolling();
+  _applyAutoLockScrolling(props) {
+    if (props.autoLockScrolling) {
+      if (props.show) {
+        this._preventScrolling();
+      } else {
+        this._allowScrolling();
+      }
+    }
   },
 
   _preventScrolling() {

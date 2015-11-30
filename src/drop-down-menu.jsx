@@ -24,7 +24,7 @@ const DropDownMenu = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
@@ -48,6 +48,8 @@ const DropDownMenu = React.createClass({
     selectedIndex: React.PropTypes.number,
     openImmediately: React.PropTypes.bool,
     style: React.PropTypes.object,
+    value: React.PropTypes.object,
+    labelMember: React.PropTypes.string,
   },
 
   getDefaultProps() {
@@ -57,6 +59,7 @@ const DropDownMenu = React.createClass({
       valueMember: 'payload',
       displayMember: 'text',
       openImmediately: false,
+      labelMember: 'text',
     };
   },
 
@@ -86,7 +89,7 @@ const DropDownMenu = React.createClass({
     }
   },
 
-  getStyles(){
+  getStyles() {
     const {disabled} = this.props;
     let zIndex = 5; // As AppBar
     let spacing = this.state.muiTheme.rawTheme.spacing;
@@ -177,8 +180,6 @@ const DropDownMenu = React.createClass({
     const {
       autoWidth,
       className,
-      onFocus,
-      onBlur,
       style,
       displayMember,
       valueMember,
@@ -187,12 +188,13 @@ const DropDownMenu = React.createClass({
       iconStyle,
       underlineStyle,
       menuItemStyle,
+      labelMember,
       ...other,
     } = this.props;
 
     let styles = this.getStyles();
     let selectedIndex = this._isControlled() ? null : this.state.selectedIndex;
-    let displayValue = "";
+    let displayValue = '';
     if (selectedIndex) {
       if (process.env.NODE_ENV !== 'production') {
         console.assert(!!this.props.menuItems[selectedIndex], 'SelectedIndex of ' + selectedIndex + ' does not exist in menuItems.');
@@ -211,7 +213,7 @@ const DropDownMenu = React.createClass({
 
     let selectedItem = this.props.menuItems[selectedIndex];
     if (selectedItem) {
-      displayValue = selectedItem[displayMember];
+      displayValue = selectedItem[labelMember];
     }
 
     let menuItems = this.props.menuItems.map((item) => {
@@ -225,8 +227,6 @@ const DropDownMenu = React.createClass({
         {...other}
         ref="root"
         onKeyDown={this._onKeyDown}
-        onFocus={onFocus}
-        onBlur={onBlur}
         className={className}
         style={this.prepareStyles(
           styles.root,
@@ -279,12 +279,12 @@ const DropDownMenu = React.createClass({
 
   _onControlClick() {
     if (!this.props.disabled) {
-      this.setState({ open: !this.state.open });
+      this.setState({open: !this.state.open});
     }
   },
 
   _onKeyDown(e) {
-    switch(e.which) {
+    switch (e.which) {
       case KeyCode.UP:
         if (!this.state.open) {
           this._selectPreviousItem();
@@ -316,12 +316,12 @@ const DropDownMenu = React.createClass({
   },
 
   _onMenuItemClick(e, key, payload) {
-    if (this.props.onChange && this.state.selectedIndex !== key) {
-      let selectedItem = this.props.menuItems[key];
-      if (selectedItem) {
-        e.target.value = selectedItem[this.props.valueMember];
-      }
+    let selectedItem = this.props.menuItems[key];
+    if (selectedItem) {
+      e.target.value = selectedItem[this.props.valueMember];
+    }
 
+    if (this.props.onChange && (this.state.selectedIndex !== key || e.target.value !== this.props.value)) {
       if (this.props.valueLink) {
         this.props.valueLink.requestChange(e.target.value);
       }

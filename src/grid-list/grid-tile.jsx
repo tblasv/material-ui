@@ -33,7 +33,7 @@ const GridTile = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
@@ -50,7 +50,7 @@ const GridTile = React.createClass({
     };
   },
 
-  getInitialState () {
+  getInitialState() {
     return {
       muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
     };
@@ -58,7 +58,7 @@ const GridTile = React.createClass({
 
   //to update theme inside state whenever a new theme is passed down
   //from the parent / owner using context
-  componentWillReceiveProps (nextProps, nextContext) {
+  componentWillReceiveProps(nextProps, nextContext) {
     let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
     this.setState({muiTheme: newMuiTheme});
   },
@@ -84,7 +84,7 @@ const GridTile = React.createClass({
         [this.props.titlePosition]: 0,
         height: this.props.subtitle ? 68 : 48,
         background: this.props.titleBackground,
-        display: '-webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: flex',
+        display: 'flex',
         alignItems: 'center',
       },
       titleWrap: {

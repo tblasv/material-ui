@@ -1,22 +1,18 @@
-const React = require('react');
-const Router = require('react-router');
-const AppLeftNav = require('./app-left-nav');
-const FullWidthSection = require('./full-width-section');
-const { AppBar,
+import React from 'react';
+import AppLeftNav from './app-left-nav';
+import FullWidthSection from './full-width-section';
+import {AppBar,
       AppCanvas,
-      FontIcon,
       IconButton,
       EnhancedButton,
-      Menu,
       Mixins,
-      RaisedButton,
       Styles,
       Tab,
       Tabs,
-      Paper} = require('material-ui');
+      Paper} from 'material-ui';
 
-const { StylePropable } = Mixins;
-const { Colors, Spacing, Typography } = Styles;
+const {StylePropable} = Mixins;
+const {Colors, Spacing, Typography} = Styles;
 const ThemeManager = Styles.ThemeManager;
 const DefaultRawTheme = Styles.LightRawTheme;
 
@@ -24,7 +20,7 @@ const DefaultRawTheme = Styles.LightRawTheme;
 const Master = React.createClass({
   mixins: [StylePropable],
 
-  getInitialState () {
+  getInitialState() {
     let muiTheme = ThemeManager.getMuiTheme(DefaultRawTheme);
     // To switch to RTL...
     // muiTheme.isRtl = true;
@@ -61,12 +57,12 @@ const Master = React.createClass({
       },
       github: {
         position: 'fixed',
-        right: Spacing.desktopGutter/2,
+        right: Spacing.desktopGutter / 2,
         top: 8,
         zIndex: 5,
         color: 'white',
       },
-       iconButton: {
+      iconButton: {
         color: darkWhite,
       },
     };
@@ -95,10 +91,6 @@ const Master = React.createClass({
 
   render() {
     let styles = this.getStyles();
-    let title =
-      this.props.history.isActive('/get-started') ? 'Get Started' :
-      this.props.history.isActive('/customization') ? 'Customization' :
-      this.props.history.isActive('/components') ? 'Components' : '';
 
     let githubButton = (
       <IconButton
@@ -120,7 +112,7 @@ const Master = React.createClass({
     return (
       <AppCanvas>
         {githubButton}
-        {this.state.renderTabs ? this._getTabs(): this._getAppBar()}
+        {this.state.renderTabs ? this._getTabs() : this._getAppBar()}
 
         {this.props.children}
         <AppLeftNav ref="leftNav" history={this.props.history} />
@@ -135,7 +127,7 @@ const Master = React.createClass({
     );
   },
 
- _getTabs() {
+  _getTabs() {
     let styles = {
       root: {
         backgroundColor: Colors.cyan500,
@@ -148,7 +140,7 @@ const Master = React.createClass({
       },
       container: {
         position: 'absolute',
-        right: (Spacing.desktopGutter/2) + 48,
+        right: (Spacing.desktopGutter / 2) + 48,
         bottom: 0,
       },
       span: {
@@ -180,7 +172,7 @@ const Master = React.createClass({
 
     };
 
-    let materialIcon= this.state.tabIndex !== '0' ? (
+    let materialIcon = this.state.tabIndex !== '0' ? (
       <EnhancedButton
         style={styles.svgLogoContainer}
         linkButton={true}
@@ -189,7 +181,7 @@ const Master = React.createClass({
         <span style={this.prepareStyles(styles.span)}>material ui</span>
       </EnhancedButton>) : null;
 
-    return(
+    return (
       <div>
         <Paper
           zDepth={0}

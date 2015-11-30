@@ -1,7 +1,7 @@
 {
   "name": "material-ui",
   "author": "Call-em-all Engineering Team",
-  "version": "0.13.1",
+  "version": "0.13.4",
   "description": "Material Design UI components built with React",
   "main": "./lib",
   "scripts": {
@@ -9,8 +9,8 @@
     "test-watch": "npm run test-base -- --auto-watch",
     "test-base": "./node_modules/.bin/karma start",
     "prebuild": "rimraf lib",
-    "lint": "gulp eslint",
     "build": "babel --presets es2015,stage-1,react ./src --out-dir ./lib",
+    "build": "babel ./src --out-dir ./lib",
     "prepublish": "npm run build"
   },
   "keywords": [
@@ -30,19 +30,19 @@
   },
   "homepage": "http://material-ui.com/",
   "dependencies": {
+    "inline-style-prefixer": "^0.5.2",
     "lodash.throttle": "~3.0.4",
     "lodash.debounce": "~3.1.1",
-    "warning": "^2.1.0"
-  },
-  "peerDependencies": {
-    "inline-style-prefixer": "^0.3.3",
-    "react": "^0.14.0",
-    "react-dom": "^0.14.0",
-    "react-tap-event-plugin": "^0.2.0",
     "react-addons-transition-group": "^0.14.0",
     "react-addons-update": "^0.14.0",
     "react-addons-create-fragment": "^0.14.0",
-    "react-addons-pure-render-mixin": "^0.14.0"
+    "react-addons-pure-render-mixin": "^0.14.0",
+    "warning": "^2.1.0"
+  },
+  "peerDependencies": {
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",
+    "react-tap-event-plugin": "^0.2.0"
   },
   "devDependencies": {
     "babel": "^6.0.15",
@@ -56,14 +56,14 @@
     "babelify": "^6.1.3",
     "browserify-istanbul": "^0.2.1",
     "chai": "^3.2.0",
-    "eslint": "~1.8.0",
+    "eslint": "^1.8.0",
     "eslint-loader": "^1.0.0",
     "eslint-plugin-react": "^3.2.2",
     "fbjs": "^0.2.1",
     "gulp": "^3.9.0",
     "gulp-eslint": "^1.0.0",
+    "gulp-if": "^2.0.0",
     "html-webpack-plugin": "^1.6.1",
-    "inline-style-prefixer": "^0.3.3",
     "karma": "^0.13.3",
     "karma-browserify": "^4.2.1",
     "karma-chai-sinon": "^0.1.5",
@@ -75,13 +75,8 @@
     "mocha": "^2.2.5",
     "phantomjs": "^1.9.17",
     "react": "^0.14.0",
-    "react-addons-create-fragment": "^0.14.0",
-    "react-addons-pure-render-mixin": "^0.14.0",
-    "react-addons-transition-group": "^0.14.0",
-    "react-addons-update": "^0.14.0",
     "react-dom": "^0.14.0",
     "react-hot-loader": "^1.2.8",
-    "react-router": "^1.0.0-rc1",
     "react-tap-event-plugin": "^0.2.0",
     "recursive-readdir-sync": "^1.0.6",
     "rimraf": "^2.4.3",

@@ -1,9 +1,8 @@
-const React = require('react');
-const { Checkbox, Styles } = require('material-ui');
-const CodeBlock = require('../../code-example/code-block');
-const CodeExample = require('../../code-example/code-example');
+import React from 'react';
+import {Checkbox, Styles} from 'material-ui';
+import CodeExample from '../../code-example/code-example';
 
-const { Typography } = Styles;
+const {Typography} = Styles;
 
 
 const InlineStyles = React.createClass({
@@ -28,7 +27,7 @@ const InlineStyles = React.createClass({
         fontWeight: Typography.fontWeightMedium,
         color: Typography.textDarkBlack,
       },
-    }
+    };
   },
 
   render() {
@@ -61,7 +60,7 @@ const InlineStyles = React.createClass({
       '  background-color: #FF9800;\n' +
       '}';
 
-      let styles = this.getStyles();
+    let styles = this.getStyles();
 
     return (
       <div>

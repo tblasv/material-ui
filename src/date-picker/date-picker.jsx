@@ -21,13 +21,14 @@ const DatePicker = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
   },
 
   propTypes: {
+    container: React.PropTypes.oneOf(['dialog', 'inline']),
     DateTimeFormat: React.PropTypes.func,
     locale: React.PropTypes.string,
     wordings: React.PropTypes.object,
@@ -37,7 +38,7 @@ const DatePicker = React.createClass({
     hideToolbarYearChange: React.PropTypes.bool,
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
-    mode: React.PropTypes.oneOf(['portrait', 'landscape', 'inline']),
+    mode: React.PropTypes.oneOf(['portrait', 'landscape']),
     onDismiss: React.PropTypes.func,
     onChange: React.PropTypes.func,
     onFocus: React.PropTypes.func,
@@ -47,6 +48,7 @@ const DatePicker = React.createClass({
     showYearSelector: React.PropTypes.bool,
     style: React.PropTypes.object,
     textFieldStyle: React.PropTypes.object,
+    value: React.PropTypes.object,
   },
 
   windowListeners: {
@@ -83,6 +85,7 @@ const DatePicker = React.createClass({
 
   render() {
     let {
+      container,
       DateTimeFormat,
       locale,
       wordings,
@@ -113,6 +116,7 @@ const DatePicker = React.createClass({
           onFocus={this._handleInputFocus}
           onTouchTap={this._handleInputTouchTap}/>
         <DatePickerDialog
+          container={container}
           ref="dialogWindow"
           DateTimeFormat={DateTimeFormat}
           locale={locale}
@@ -121,7 +125,7 @@ const DatePicker = React.createClass({
           initialDate={this.state.dialogDate}
           onAccept={this._handleDialogAccept}
           onShow={onShow}
-          onDismiss={this._handleDialogDismiss}
+          onDismiss={onDismiss}
           minDate={minDate}
           maxDate={maxDate}
           autoOk={autoOk}
@@ -168,10 +172,6 @@ const DatePicker = React.createClass({
     }
     if (this.props.onChange) this.props.onChange(null, d);
     if (this.props.valueLink) this.props.valueLink.requestChange(d);
-  },
-
-  _handleDialogDismiss() {
-    if (this.props.onDismiss) this.props.onDismiss();
   },
 
   _handleInputFocus(e) {

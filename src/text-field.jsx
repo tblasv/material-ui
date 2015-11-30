@@ -32,14 +32,11 @@ const TextField = React.createClass({
 
   propTypes: {
     errorStyle: React.PropTypes.object,
-    errorText: React.PropTypes.string,
+    errorText: React.PropTypes.node,
     floatingLabelStyle: React.PropTypes.object,
-    floatingLabelText: React.PropTypes.string,
+    floatingLabelText: React.PropTypes.node,
     fullWidth: React.PropTypes.bool,
-    hintText: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.element,
-    ]),
+    hintText: React.PropTypes.node,
     hintStyle: React.PropTypes.object,
     id: React.PropTypes.string,
     inputStyle: React.PropTypes.object,
@@ -56,6 +53,9 @@ const TextField = React.createClass({
     underlineFocusStyle: React.PropTypes.object,
     underlineDisabledStyle: React.PropTypes.object,
     style: React.PropTypes.object,
+    disabled: React.PropTypes.bool,
+    defaultValue: React.PropTypes.string,
+    value: React.PropTypes.string,
   },
 
   //for passing default theme context to children
@@ -63,7 +63,7 @@ const TextField = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
@@ -79,7 +79,7 @@ const TextField = React.createClass({
 
   statics: {
     getRelevantContextKeys(muiTheme) {
-      const textFieldTheme = muiTheme.textField
+      const textFieldTheme = muiTheme.textField;
 
       return {
         floatingLabelColor: textFieldTheme.floatingLabelColor,
@@ -231,6 +231,7 @@ const TextField = React.createClass({
       bottom: 'none',
       opacity: 1,
       zIndex: 1, // Needed to display label above Chrome's autocomplete field background
+      cursor: 'text',
       transform: 'scale(1) translate3d(0, 0, 0)',
       transformOrigin: 'left top',
     });
@@ -312,7 +313,8 @@ const TextField = React.createClass({
     let floatingLabelTextElement = floatingLabelText ? (
       <label
         style={this.prepareStyles(styles.floatingLabel, this.props.floatingLabelStyle)}
-        htmlFor={inputId}>
+        htmlFor={inputId}
+        onTouchTap={this.focus}>
         {floatingLabelText}
       </label>
     ) : null;

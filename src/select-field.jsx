@@ -27,13 +27,13 @@ const SelectField = React.createClass({
   },
 
   propTypes: {
-    errorText: React.PropTypes.string,
-    floatingLabelText: React.PropTypes.string,
+    errorText: React.PropTypes.node,
+    floatingLabelText: React.PropTypes.node,
     selectFieldRoot: React.PropTypes.object,
     underlineStyle: React.PropTypes.object,
     labelStyle: React.PropTypes.object,
     errorStyle: React.PropTypes.object,
-    hintText: React.PropTypes.string,
+    hintText: React.PropTypes.node,
     id: React.PropTypes.string,
     multiLine: React.PropTypes.bool,
     onBlur: React.PropTypes.func,
@@ -51,6 +51,7 @@ const SelectField = React.createClass({
     menuItemStyle: React.PropTypes.object,
     selectedIndex: React.PropTypes.number,
     style: React.PropTypes.object,
+    labelMember: React.PropTypes.string,
   },
 
   //for passing default theme context to children
@@ -58,13 +59,13 @@ const SelectField = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
   },
 
-  getInitialState () {
+  getInitialState() {
     return {
       muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
     };
@@ -73,12 +74,13 @@ const SelectField = React.createClass({
   getDefaultProps() {
     return {
       fullWidth: false,
+      labelMember: 'text',
     };
   },
 
   //to update theme inside state whenever a new theme is passed down
   //from the parent / owner using context
-  componentWillReceiveProps (nextProps, nextContext) {
+  componentWillReceiveProps(nextProps, nextContext) {
     let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
     this.setState({muiTheme: newMuiTheme});
   },
@@ -109,16 +111,15 @@ const SelectField = React.createClass({
     };
 
     if (!this.props.floatingLabelText) {
-      if(this.props.hintText) {
+      styles.label.top = -6;
+      styles.icon.top = 11;
+
+      if (this.props.hintText) {
         styles.root.top = -5;
-        styles.label.top = 1;
-        styles.icon.top = 17;
-      }
-      else {
+      } else {
         styles.root.top = -8;
       }
-    }
-    else {
+    } else {
       styles.error.bottom = -15;
     }
 
@@ -141,6 +142,9 @@ const SelectField = React.createClass({
       hintText,
       fullWidth,
       errorText,
+      onFocus,
+      onBlur,
+      labelMember,
       ...other,
     } = this.props;
 
@@ -152,6 +156,8 @@ const SelectField = React.createClass({
       fullWidth: fullWidth,
       errorText: errorText,
       errorStyle: this.mergeAndPrefix(styles.error, errorStyle),
+      onFocus: onFocus,
+      onBlur: onBlur,
     };
     const dropDownMenuProps = {
       menuItems: menuItems,
@@ -161,6 +167,7 @@ const SelectField = React.createClass({
       iconStyle: this.mergeAndPrefix(styles.icon, iconStyle),
       underlineStyle: this.mergeAndPrefix(styles.underline, underlineStyle),
       autoWidth: false,
+      labelMember: labelMember,
     };
 
     return (

@@ -1,13 +1,13 @@
-let React = require('react');
-let { ClearFix, Mixins, Paper } = require('material-ui');
-let ComponentDoc = require('../../component-doc');
+import React from 'react';
+import {ClearFix, Mixins, Paper} from 'material-ui';
+import ComponentDoc from '../../component-doc';
 
-let { StyleResizable } = Mixins;
-let Code = require('paper-code');
-let CodeExample = require('../../code-example/code-example');
+const {StyleResizable} = Mixins;
+import Code from 'paper-code';
+import CodeExample from '../../code-example/code-example';
+import CodeBlock from '../../code-example/code-block';
 
-
-let PaperPage = React.createClass ({
+const PaperPage = React.createClass({
 
   mixins: [StyleResizable],
 
@@ -64,7 +64,7 @@ let PaperPage = React.createClass ({
           },
           {
             name: 'zDepth',
-            type: 'number (0-5)',
+            type: 'oneOf [0,1,2,3,4,5]',
             header: 'default: 1',
             desc: 'This number represents the zDepth of the paper shadow.',
           },
@@ -84,6 +84,19 @@ let PaperPage = React.createClass ({
       <ComponentDoc
         name="Paper"
         componentInfo={componentInfo}>
+
+        <Paper style = {{marginBottom: '22px'}}>
+          <CodeBlock>
+          {
+            `//Import statement:
+import Paper from 'material-ui/lib/paper';
+
+//See material-ui/lib/index.js for more
+            `
+          }
+          </CodeBlock>
+        </Paper>
+
         <CodeExample code={Code}>
           <div>
             <ClearFix style={groupStyle}>
@@ -119,7 +132,7 @@ let PaperPage = React.createClass ({
   _getGroupDefault() {
     let elements = [];
     for (let i = 1; i <= 5; i++) {
-      elements.push(this._createPaperElement(i, "zDepth="+i));
+      elements.push(this._createPaperElement(i, 'zDepth=' + i));
     }
     return elements;
   },
@@ -127,7 +140,7 @@ let PaperPage = React.createClass ({
   _getGroupRounded() {
     let elements = [];
     for (let i = 1; i <= 5; i++) {
-      elements.push(React.cloneElement(this._createPaperElement(i, "rounded=false"), {rounded: false}));
+      elements.push(React.cloneElement(this._createPaperElement(i, 'rounded=false'), {rounded: false}));
     }
     return elements;
   },
@@ -135,7 +148,7 @@ let PaperPage = React.createClass ({
   _getGroupCircle() {
     let elements = [];
     for (let i = 1; i <= 5; i++) {
-      elements.push(React.cloneElement(this._createPaperElement(i, "circle=true"), {circle: true}));
+      elements.push(React.cloneElement(this._createPaperElement(i, 'circle=true'), {circle: true}));
     }
     return elements;
   },

@@ -1,13 +1,13 @@
-let React = require('react');
-let { CircularProgress, LinearProgress } = require('material-ui');
-let ComponentDoc = require('../../component-doc');
-let Code = require('progress-code');
-let CodeExample = require('../../code-example/code-example');
+import React from 'react';
+import {CircularProgress, LinearProgress, Paper} from 'material-ui';
+import ComponentDoc from '../../component-doc';
+import Code from 'progress-code';
+import CodeExample from '../../code-example/code-example';
+import CodeBlock from '../../code-example/code-block';
 
+const ProgressPage = React.createClass({
 
-let ProgressPage = React.createClass({
-
-  getInitialState () {
+  getInitialState() {
     return {
       completed: 0,
     };
@@ -38,7 +38,7 @@ let ProgressPage = React.createClass({
         infoArray: [
           {
             name: 'mode',
-            type: 'one of: determinate, indeterminate',
+            type: 'oneOf ["determinate", "indeterminate"]',
             header: 'default: indeterminate',
             desc: 'The mode of show your progress, indeterminate for when there is no value for progress. ',
           },
@@ -72,6 +72,12 @@ let ProgressPage = React.createClass({
             header: 'optional',
             desc: 'Override the inline-styles of the progress\'s root element.',
           },
+          {
+            name: 'color',
+            type: 'string',
+            header: 'optional',
+            desc: 'Override the progress\'s color.',
+          },
         ],
       },
     ];
@@ -81,6 +87,17 @@ let ProgressPage = React.createClass({
       <ComponentDoc
         name="Progress"
         componentInfo={componentInfo}>
+
+        <Paper style = {{marginBottom: '22px'}}>
+          <CodeBlock>
+          {
+            '//Import statement:\import CircularProgress from \'material-ui/lib/circular-progress\';\n' +
+            'import LinearProgress from \'material-ui/lib/linear-progress\';\n\n' +
+            '//See material-ui/lib/index.js for more\n'
+          }
+          </CodeBlock>
+        </Paper>
+
         <CodeExample code={Code}>
           <h2>Linear Progress</h2>
           <p>
@@ -90,8 +107,11 @@ let ProgressPage = React.createClass({
           <p>
             Indeterminate
           </p>
-          <LinearProgress mode="indeterminate"  />
-
+          <LinearProgress mode="indeterminate" />
+          <p>
+            Overriding the theme's color
+          </p>
+          <LinearProgress mode="determinate" color={"#4CAF50"} value={this.state.completed} />
           <br/><br/>
           <h2>Circular Progress</h2>
           <p>
@@ -103,9 +123,9 @@ let ProgressPage = React.createClass({
           <p>
             Indeterminate
           </p>
-          <CircularProgress mode="indeterminate"  />
+          <CircularProgress mode="indeterminate" />
           <CircularProgress mode="indeterminate" size={1.5} />
-          <CircularProgress mode="indeterminate" size={2} />
+          <CircularProgress mode="indeterminate" color={"red"} size={2} />
         </CodeExample>
       </ComponentDoc>
     );

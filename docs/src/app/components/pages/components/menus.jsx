@@ -1,20 +1,20 @@
-let React = require('react');
-const ReactTransitionGroup = require('react-addons-transition-group');
-let Menu = require('menus/menu');
-let MenuItem = require('menus/menu-item');
-let MenuDivider = require('menus/menu-divider');
-let ComponentDoc = require('../../component-doc');
+import React from 'react';
+import Paper from 'paper';
+import Menu from 'menus/menu';
+import MenuItem from 'menus/menu-item';
+import MenuDivider from 'menus/menu-divider';
+import ComponentDoc from '../../component-doc';
 
-let ArrowDropRight = require('svg-icons/navigation-arrow-drop-right');
-let ContentCopy = require('svg-icons/content/content-copy');
-let ContentLink = require('svg-icons/content/link');
-let Delete = require('svg-icons/action/delete');
-let Download = require('svg-icons/file/file-download');
-let PersonAdd = require('svg-icons/social/person-add');
-let RemoveRedEye = require('svg-icons/image/remove-red-eye');
-let Code = require('menus-code');
-let CodeExample = require('../../code-example/code-example');
-
+import ArrowDropRight from 'svg-icons/navigation-arrow-drop-right';
+import ContentCopy from 'svg-icons/content/content-copy';
+import ContentLink from 'svg-icons/content/link';
+import Delete from 'svg-icons/action/delete';
+import Download from 'svg-icons/file/file-download';
+import PersonAdd from 'svg-icons/social/person-add';
+import RemoveRedEye from 'svg-icons/image/remove-red-eye';
+import Code from 'menus-code';
+import CodeExample from '../../code-example/code-example';
+import CodeBlock from '../../code-example/code-block';
 
 export default class MenusPage extends React.Component {
 
@@ -72,20 +72,20 @@ export default class MenusPage extends React.Component {
           },
           {
             name: 'openDirection',
-            type: 'oneOf [bottom-left, bottom-right, top-left, top-right]',
+            type: 'oneOf ["bottom-left", "bottom-right", "top-left", "top-right"]',
             header: 'default: bottom-left',
             desc: 'This is the placement of the menu relative to the IconButton.',
           },
           {
             name: 'value',
-            type: 'string or array',
+            type: 'oneOfType [string, array]',
             header: 'optional',
             desc: 'The value of the selected menu item. If passed in, this will make the menu ' +
               'a controlled component. This component also supports valueLink.',
           },
           {
             name: 'width',
-            type: 'string or number',
+            type: 'oneOfType [string, integer]',
             header: 'optional',
             desc: 'Sets the width of the menu. If not specified, the menu width will be dictated by its ' +
               'children. The rendered width will always be a keyline increment (64px for desktop, 56px otherwise).',
@@ -96,6 +96,27 @@ export default class MenusPage extends React.Component {
             header: 'optional',
             desc: 'Sets the width of the menu. If not specified, the menu width will be dictated by its ' +
               'children. The rendered width will always be a keyline increment (64px for desktop, 56px otherwise).',
+          },
+        ],
+      },
+      {
+        name: 'Menu Events',
+        infoArray: [
+          {
+            name: 'onEscKeyDown',
+            header: 'function(event)',
+            desc: 'Fired when an Esc key is keyed down.',
+          },
+          {
+            name: 'onItemTouchTap',
+            header: 'function(event, item)',
+            desc: 'Fired when a menu item is touchTapped.',
+          },
+          {
+            name: 'onChange',
+            header: 'function(event, value)',
+            desc: 'Fired when a menu item is touchTapped and the menu item value ' +
+              'is not equal to the current menu value.',
           },
         ],
       },
@@ -173,23 +194,12 @@ export default class MenusPage extends React.Component {
         ],
       },
       {
-        name: 'Events',
+        name: 'Menu Item Events',
         infoArray: [
           {
-            name: 'onEscKeyDown',
-            header: 'function(event)',
-            desc: 'Fired when an Esc key is keyed down.',
-          },
-          {
-            name: 'onItemTouchTap',
+            name: 'onTouchTap',
             header: 'function(event, item)',
             desc: 'Fired when a menu item is touchTapped.',
-          },
-          {
-            name: 'onChange',
-            header: 'function(event, value)',
-            desc: 'Fired when a menu item is touchTapped and the menu item value ' +
-              'is not equal to the current menu value.',
           },
         ],
       },
@@ -215,6 +225,21 @@ export default class MenusPage extends React.Component {
         name="Menus"
         desc={desc}
         componentInfo={componentInfo}>
+
+        <Paper style = {{marginBottom: '22px'}}>
+          <CodeBlock>
+          {
+            `//Import statement:
+import Menu from 'material-ui/lib/menus/menu';
+import MenuItem from 'material-ui/lib/menus/menu-item';
+import MenuDivider from 'material-ui/lib/menus/menu-divider';
+
+//See material-ui/lib/index.js for more
+          `
+          }
+          </CodeBlock>
+        </Paper>
+
         <CodeExample code={Code}>
           <Menu style={styles.menu}>
             <MenuItem primaryText="Maps" />
@@ -304,7 +329,17 @@ export default class MenusPage extends React.Component {
             <MenuItem primaryText="Single" insetChildren={true} />
             <MenuItem primaryText="1.15" insetChildren={true} />
             <MenuItem primaryText="Double" insetChildren={true} />
-            <MenuItem primaryText="Custom: 1.2" checked={true} rightIcon={<ArrowDropRight />} />
+            <MenuItem primaryText="Custom: 1.2" checked={true} rightIcon={<ArrowDropRight />} menuItems={[
+              <MenuItem primaryText="Show" rightIcon={<ArrowDropRight />} menuItems={[
+                <MenuItem primaryText="Show Level 2" />,
+                <MenuItem primaryText="Grid lines" checked={true} />,
+                <MenuItem primaryText="Page breaks" insetChildren={true} />,
+                <MenuItem primaryText="Rules" checked={true} />,
+              ]}/>,
+              <MenuItem primaryText="Grid lines" checked={true} />,
+              <MenuItem primaryText="Page breaks" insetChildren={true} />,
+              <MenuItem primaryText="Rules" checked={true} />,
+            ]} />
             <MenuDivider />
             <MenuItem primaryText="Add space before paragraph" />
             <MenuItem primaryText="Add space after paragraph" />

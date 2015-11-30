@@ -1,9 +1,7 @@
-const React = require('react');
-const mui = require('material-ui');
-const CodeBlock = require('../../code-example/code-block');
-const ComponentDoc = require('../../component-doc');
-const ComponentInfo = require('../../component-info');
-const CodeExample = require('../../code-example/code-example');
+import React from 'react';
+import mui from 'material-ui';
+import CodeBlock from '../../code-example/code-block';
+import ComponentDoc from '../../component-doc';
 
 const {
   Checkbox,
@@ -29,8 +27,8 @@ const {
   Toggle,
 } = mui;
 
-const { StylePropable, StyleResizable } = Mixins;
-const { Typography } = Styles;
+const {StylePropable, StyleResizable} = Mixins;
+const {Typography} = Styles;
 const ThemeManager = Styles.ThemeManager;
 const DefaultRawTheme = Styles.LightRawTheme;
 const DarkRawTheme = Styles.DarkRawTheme;
@@ -48,13 +46,13 @@ const ThemesPage = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
   },
 
-  getInitialState () {
+  getInitialState() {
     return {
       muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DarkRawTheme),
       isThemeDark: false,
@@ -63,7 +61,7 @@ const ThemesPage = React.createClass({
 
   //to update theme inside state whenever a new theme is passed down
   //from the parent / owner using context
-  componentWillReceiveProps (nextProps, nextContext) {
+  componentWillReceiveProps(nextProps, nextContext) {
     let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
     this.setState({muiTheme: newMuiTheme});
   },
@@ -158,10 +156,10 @@ const ThemesPage = React.createClass({
   render() {
 
     let lightRawTheme =
-      'let Colors = require(\'material-ui/lib/styles/colors\');\n' +
-      'let ColorManipulator = require(\'material-ui/lib/utils/color-manipulator\');\n' +
-      'let Spacing = require(\'material-ui/lib/styles/spacing\');\n\n' +
-      'module.exports = {\n' +
+      'import Colors from \'material-ui/lib/styles/colors\';\n' +
+      'import ColorManipulator from \'material-ui/lib/utils/color-manipulator\';\n' +
+      'import Spacing from \'material-ui/lib/styles/spacing\';\n\n' +
+      'export default {\n' +
       '  spacing: Spacing,\n' +
       '  fontFamily: \'Roboto, sans-serif\',\n' +
       '  palette: {\n' +
@@ -180,12 +178,12 @@ const ThemesPage = React.createClass({
       '};\n';
 
     let reactContextExampleCode =
-      'const React = require(\'react\');\n' +
-      'const AppBar = require(\'material-ui\/lib\/app-bar\');\n' +
-      'const RaisedButton = require(\'material-ui\/lib\/raised-button\');\n\n' +
+      'import React from \'react\';\n' +
+      'import AppBar from \'material-ui\/lib\/app-bar\';\n' +
+      'import RaisedButton from \'material-ui\/lib\/raised-button\';\n\n' +
 
-      'const ThemeManager = require(\'material-ui\/lib\/styles\/theme-manager\');\n' +
-      'const MyRawTheme = require(\'path\/to\/your\/raw\/theme\/file\');\n\n' +
+      'import ThemeManager from \'material-ui\/lib\/styles\/theme-manager\';\n' +
+      'import MyRawTheme from \'path\/to\/your\/raw\/theme\/file\';\n\n' +
 
       'const MySampleAppComponent = React.createClass({\n\n' +
 
@@ -211,16 +209,16 @@ const ThemesPage = React.createClass({
       '    );\n' +
       '  },\n' +
       '});\n\n' +
-      'module.exports = MySampleAppComponent;\n';
+      'export default MySampleAppComponent;\n';
 
     let decoratorExampleCode =
-      'const React = require(\'react\');\n' +
-      'const AppBar = require(\'material-ui\/lib\/app-bar\');\n' +
-      'const RaisedButton = require(\'material-ui\/lib\/raised-button\');\n\n' +
+      'import React from \'react\';\n' +
+      'import AppBar from \'material-ui\/lib\/app-bar\';\n' +
+      'import RaisedButton from \'material-ui\/lib\/raised-button\';\n\n' +
 
-      'const MyRawTheme = require(\'path\/to\/your\/raw\/theme\/file\');\n' +
-      'const ThemeManager = require(\'material-ui\/lib\/styles\/theme-manager\');\n' +
-      'const ThemeDecorator = require(\'material-ui\/lib\/styles\/theme-decorator\');\n\n' +
+      'import MyRawTheme from \'path\/to\/your\/raw\/theme\/file\';\n' +
+      'import ThemeManager from \'material-ui\/lib\/styles\/theme-manager\';\n' +
+      'import ThemeDecorator from \'material-ui\/lib\/styles\/theme-decorator\';\n\n' +
 
       '@ThemeDecorator(ThemeManager.getMuiTheme(MyRawTheme))\n' +
       'class MySampleAppComponent extends React.Component {\n\n' +
@@ -241,7 +239,7 @@ const ThemesPage = React.createClass({
       '  }\n' +
       '}\n\n' +
 
-      'module.exports = MySampleAppComponent;\n';
+      'export default MySampleAppComponent;\n';
 
     let receiveThemeInContextCode =
       'const SpecificPageInApp = React.createClass({\n\n' +
@@ -455,40 +453,40 @@ const ThemesPage = React.createClass({
   getComponentGroup() {
     //Standard Actions
     let standardActions = [
-      { text: 'Cancel' },
-      { text: 'Submit', onTouchTap: this._onDialogSubmit },
+      {text: 'Cancel'},
+      {text: 'Submit', onTouchTap: this._onDialogSubmit},
     ];
 
     let menuItemsNav = [
-      { route: 'get-started', text: 'Get Started' },
-      { route: 'customization', text: 'Customization' },
-      { route: 'component', text: 'Component' },
-      { type: MenuItem.Types.SUBHEADER, text: 'Resources' },
+      {route: 'get-started', text: 'Get Started'},
+      {route: 'customization', text: 'Customization'},
+      {route: 'component', text: 'Component'},
+      {type: MenuItem.Types.SUBHEADER, text: 'Resources'},
       {
-         type: MenuItem.Types.LINK,
-         payload: 'https://github.com/callemall/material-ui',
-         text: 'GitHub',
+        type: MenuItem.Types.LINK,
+        payload: 'https://github.com/callemall/material-ui',
+        text: 'GitHub',
       },
       {
-         text: 'Disabled',
-         disabled: true,
+        text: 'Disabled',
+        disabled: true,
       },
       {
-         type: MenuItem.Types.LINK,
-         payload: 'https://www.google.com',
-         text: 'Disabled Link',
-         disabled: true,
+        type: MenuItem.Types.LINK,
+        payload: 'https://www.google.com',
+        text: 'Disabled Link',
+        disabled: true,
       },
     ];
 
     let styles = this.getStyles();
 
     let menuItems = [
-       { payload: '1', text: 'Never' },
-       { payload: '2', text: 'Every Night' },
-       { payload: '3', text: 'Weeknights' },
-       { payload: '4', text: 'Weekends' },
-       { payload: '5', text: 'Weekly' },
+       {payload: '1', text: 'Never'},
+       {payload: '2', text: 'Every Night'},
+       {payload: '3', text: 'Weeknights'},
+       {payload: '4', text: 'Weekends'},
+       {payload: '5', text: 'Weekly'},
     ];
 
     return (
@@ -502,7 +500,7 @@ const ThemesPage = React.createClass({
               <RaisedButton label="Secondary" secondary={true} />
             </div>
             <div style={styles.containerCentered}>
-              <RaisedButton label="Primary"  primary={true}/>
+              <RaisedButton label="Primary" primary={true}/>
             </div>
             <div style={styles.containerCentered}>
               <RaisedButton label="Default"/>
@@ -623,7 +621,7 @@ const ThemesPage = React.createClass({
 
   // Toggles between light and dark themes
   onTabChange(isDark) {
-    if(this.state.isThemeDark === isDark){
+    if (this.state.isThemeDark === isDark) {
       return;
     }
     let newMuiTheme = null;
@@ -660,4 +658,4 @@ const ThemesPage = React.createClass({
   },
 });
 
-module.exports = ThemesPage;
+export default ThemesPage;

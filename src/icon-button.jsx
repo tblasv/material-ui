@@ -47,7 +47,7 @@ const IconButton = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
@@ -66,6 +66,8 @@ const IconButton = React.createClass({
     tooltipPosition: PropTypes.cornersAndCenter,
     touch: React.PropTypes.bool,
     style: React.PropTypes.object,
+    onMouseLeave: React.PropTypes.func,
+    onMouseEnter: React.PropTypes.func,
   },
 
   getInitialState() {
@@ -77,7 +79,7 @@ const IconButton = React.createClass({
 
   //to update theme inside state whenever a new theme is passed down
   //from the parent / owner using context
-  componentWillReceiveProps (nextProps, nextContext) {
+  componentWillReceiveProps(nextProps, nextContext) {
     let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
     this.setState({muiTheme: newMuiTheme});
   },
@@ -202,13 +204,13 @@ const IconButton = React.createClass({
   },
 
   _showTooltip() {
-    if (!this.props.disabled && this.props.tooltip) {
-      this.setState({ tooltipShown: true });
+    if (this.props.tooltip) {
+      this.setState({tooltipShown: true});
     }
   },
 
   _hideTooltip() {
-    if (this.props.tooltip) this.setState({ tooltipShown: false });
+    if (this.props.tooltip) this.setState({tooltipShown: false});
   },
 
   _handleBlur(e) {

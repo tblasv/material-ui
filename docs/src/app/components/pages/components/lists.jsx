@@ -1,21 +1,22 @@
-let React = require('react');
-let mui = require('material-ui');
-let ComponentDoc = require('../../component-doc');
-let MobileTearSheet = require('../../mobile-tear-sheet');
-let ActionAssignment = require('svg-icons/action/assignment');
-let ActionGrade = require('svg-icons/action/grade');
-let ActionInfo = require('svg-icons/action/info');
-let CommunicationCall = require('svg-icons/communication/call');
-let CommunicationChatBubble = require('svg-icons/communication/chat-bubble');
-let CommunicationEmail = require('svg-icons/communication/email');
-let ContentDrafts = require('svg-icons/content/drafts');
-let ContentInbox = require('svg-icons/content/inbox');
-let ContentSend = require('svg-icons/content/send');
-let EditorInsertChart = require('svg-icons/editor/insert-chart');
-let FileFolder = require('svg-icons/file/folder');
-let MoreVertIcon = require('svg-icons/navigation/more-vert');
+import React from 'react';
+import mui from 'material-ui';
+import ComponentDoc from '../../component-doc';
+import MobileTearSheet from '../../mobile-tear-sheet';
+import ActionAssignment from 'svg-icons/action/assignment';
+import ActionGrade from 'svg-icons/action/grade';
+import ActionInfo from 'svg-icons/action/info';
+import CommunicationCall from 'svg-icons/communication/call';
+import CommunicationChatBubble from 'svg-icons/communication/chat-bubble';
+import CommunicationEmail from 'svg-icons/communication/email';
+import ContentDrafts from 'svg-icons/content/drafts';
+import ContentInbox from 'svg-icons/content/inbox';
+import ContentSend from 'svg-icons/content/send';
+import EditorInsertChart from 'svg-icons/editor/insert-chart';
+import FileFolder from 'svg-icons/file/folder';
+import MoreVertIcon from 'svg-icons/navigation/more-vert';
+import {SelectableContainerEnhance} from 'material-ui/hoc/selectable-enhance';
 
-let {
+const {
   Avatar,
   Checkbox,
   IconButton,
@@ -24,21 +25,76 @@ let {
   ListItem,
   Styles,
   Toggle,
+  Paper,
 } = mui;
 
-let IconMenu = require('menus/icon-menu');
-let MenuItem = require('menus/menu-item');
+import IconMenu from 'menus/icon-menu';
+import MenuItem from 'menus/menu-item';
 
-let { Colors } = Styles;
-let Code = require('lists-code');
-let CodeExample = require('../../code-example/code-example');
+const {Colors} = Styles;
+import Code from 'lists-code';
+import CodeExample from '../../code-example/code-example';
+import CodeBlock from '../../code-example/code-block';
+let SelectableList = SelectableContainerEnhance(List);
 
+const Typography = Styles.Typography;
+let styles = {
+  headline: {
+    fontSize: '24px',
+    lineHeight: '32px',
+    paddingTop: '16px',
+    marginBottom: '12px',
+    letterSpacing: '0',
+    fontWeight: Typography.fontWeightNormal,
+    color: Typography.textDarkBlack,
+  },
+  subheadline: {
+    fontSize: '18px',
+    lineHeight: '27px',
+    paddingTop: '12px',
+    marginBottom: '9px',
+    letterSpacing: '0',
+    fontWeight: Typography.fontWeightNormal,
+    color: Typography.textDarkBlack,
+  },
+  codeblock: {
+    padding: '24px',
+    marginBottom: '32px',
+  },
+};
+
+function wrapState(ComposedComponent) {
+  const StateWrapper = React.createClass({
+    getInitialState() {
+      return {selectedIndex: 1};
+    },
+    handleUpdateSelectedIndex(e, index) {
+      this.setState({
+        selectedIndex: index,
+      });
+    },
+    render() {
+      return <ComposedComponent {...this.props} {...this.state}
+              valueLink={{value: this.state.selectedIndex, requestChange: this.handleUpdateSelectedIndex}} />;
+    },
+  });
+  return StateWrapper;
+}
+
+SelectableList = wrapState(SelectableList);
 
 
 export default class ListsPage extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {selectedIndex: 1};
+
+    this.handleUpdateSelectedIndex = (e, index) => {
+      this.setState({
+        selectedIndex: index,
+      });
+    };
   }
 
   render() {
@@ -52,6 +108,12 @@ export default class ListsPage extends React.Component {
             type: 'bool',
             header: 'default: false',
             desc: 'If true, the subheader will be indented by 72px.',
+          },
+          {
+            name: 'selectedItemStyle',
+            type: 'object',
+            header: 'optional, only available if HOC SelectableContainerEnhance is used',
+            desc: 'Override the choosen inline-styles to indicate a <ListItem> is highlighted. You can set e.g. the background color here like this way: {{backgroundColor: #da4e49}}.',
           },
           {
             name: 'style',
@@ -70,6 +132,13 @@ export default class ListsPage extends React.Component {
             type: 'object',
             header: 'optional',
             desc: 'The style object to override subheader styles.',
+          },
+          {
+            name: 'valueLink',
+            type: 'valueLink',
+            header: 'optional, only available if HOC SelectableContainerEnhance is used',
+            desc: 'Makes List controllable. Highlights the ListItem whose index prop matches this "selectedLink.value". ' +
+              '"selectedLink.requestChange" represents a callback function to change that value (e.g. in state).',
           },
         ],
       },
@@ -120,13 +189,13 @@ export default class ListsPage extends React.Component {
           },
           {
             name: 'nestedLevel',
-            type: 'integer',
+            type: 'number',
             header: 'optional',
             desc: 'Controls how deep a ListItem appears. This property is automatically managed so modify at your own risk.',
           },
           {
             name: 'initiallyOpen',
-            type: 'boolean',
+            type: 'bool',
             header: 'default: false',
             desc: 'Controls whether or not the child ListItems are initially displayed.',
           },
@@ -181,6 +250,13 @@ export default class ListsPage extends React.Component {
             type: 'object',
             header: 'optional',
             desc: 'Override the inline-styles of the list item\'s root element.',
+          },
+          {
+            name: 'value',
+            type: 'number',
+            header: 'optional, only available if HOC SelectableContainerEnhance is used',
+            desc: 'If valueLink prop is passed to List component, this prop is also required. It assigns an identifier ' +
+              'to the listItem so that it can be hightlighted by the List.',
           },
         ],
       },
@@ -248,6 +324,21 @@ export default class ListsPage extends React.Component {
       <ComponentDoc
         name="Lists"
         componentInfo={componentInfo}>
+
+        <Paper style = {{marginBottom: '22px'}}>
+          <CodeBlock>
+          {
+            `//Import statement:
+import List from 'material-ui/lib/lists/list';
+import ListDivider from 'material-ui/lib/lists/list-divider';
+import ListItem from 'material-ui/lib/lists/list-item';
+
+//See material-ui/lib/index.js for more
+            `
+          }
+          </CodeBlock>
+        </Paper>
+
         <CodeExample code={Code}>
           <MobileTearSheet>
             <List>
@@ -654,9 +745,105 @@ export default class ListsPage extends React.Component {
                 secondaryTextLines={2} />
             </List>
           </MobileTearSheet>
+          <MobileTearSheet>
+            <SelectableList
+              value={3}
+              subheader="SelectableContacts">
+
+              <ListItem
+                value={1}
+                primaryText="Brendan Lim"
+                leftAvatar={<Avatar src="images/ok-128.jpg" />} />
+              <ListItem value={2}
+                primaryText="Grace Ng"
+                leftAvatar={<Avatar src="images/uxceo-128.jpg" />} />
+              <ListItem value={3}
+                primaryText="Kerem Suer"
+                leftAvatar={<Avatar src="images/kerem-128.jpg" />} />
+              <ListItem value={4}
+                primaryText="Eric Hoffman"
+                leftAvatar={<Avatar src="images/kolage-128.jpg" />} />
+              <ListItem value={5}
+                primaryText="Raquel Parrado"
+                leftAvatar={<Avatar src="images/raquelromanp-128.jpg" />} />
+            </SelectableList>
+          </MobileTearSheet>
         </CodeExample>
+
+        <Paper style={{padding: '24px', marginBottom: '32px'}}>
+        <div>
+          <h2 style={styles.headline}>Selectable Lists</h2>
+          <p>
+            Basically three steps are needed:
+          </p>
+          <ul>
+            <li>enhance <code>&lt;List&gt;</code> with HOC</li>
+            <li>decide where to put state</li>
+            <li>implement and set valueLink</li>
+          </ul>
+
+
+          <h3 style={styles.subheadline}> Enhance List</h3>
+          <p>
+            Wrapping the <code>&lt;List&gt;</code> component with the higher order component "SelectableEnhance" enables
+            the clicked <code>&lt;ListItem&gt;</code> to be highlighted.
+          </p>
+          <div style={styles.codeblock}>
+            <CodeBlock>
+ {`import { SelectableContainerEnhance } from 'material-ui/lib/hoc/selectable-enhance';
+.
+.
+.
+var SelectableList = SelectableContainerEnhance(List);
+`}
+            </CodeBlock>
+          </div>
+
+
+          <h3 style={styles.subheadline}>Where to put state</h3>
+          <p>
+            If this component is used in conjunction with flux or redux this is a no-brainer. The callback-handler
+            just has to update the store. Otherwise the state can be held within e.g the parent, but it is to be to
+            considered that each time a <code>&lt;ListItem&gt;</code> is clicked, the state will update and the parent - including it's
+            children - will rerender.
+          </p>
+          <p>
+            A possible solution for this is to use another hoc. An example can be found in the sourcecode
+            of <code>docs/src/app/components/pages/components/lists.jsx</code>.
+          </p>
+          <h3 style={styles.subheadline}>The valueLink</h3>
+          <p>
+            The prop 'valueLink' of <code>&lt;List&gt;</code> has to be set, to make the highlighting controllable:
+          </p>
+          <div style={styles.codeblock}>
+            <CodeBlock>
+{`valueLink={{
+    value: this.state.selectedIndex,
+    requestChange: this.handleUpdateSelectedIndex}}
+`}
+            </CodeBlock>
+          </div>
+          A sample implementation might look like this.
+          <div style={styles.codeblock}>
+            <CodeBlock>
+{`getInitialState() {
+ return { selectedIndex: 1 };
+},
+handleUpdateSelectedIndex(e,index) {
+  this.setState({
+    selectedIndex: index,
+});
+`}
+            </CodeBlock>
+          </div>
+          <h3 style={styles.subheadline}>Adjust the <code>&lt;ListItem&gt;</code></h3>
+          <p>
+            The prop "value" on each ListItem has to be set. This makes the item addressable for the callback.
+          </p>
+        </div>
+        </Paper>
       </ComponentDoc>
     );
-  }
 
+  }
 }

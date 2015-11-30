@@ -1,12 +1,13 @@
-let React = require('react');
-let { GridList, GridTile } = require('material-ui');
+import React from 'react';
+import {GridList, GridTile, Paper} from 'material-ui';
 
-let StarBorder = require('svg-icons/toggle/star-border');
-let IconButton = require('icon-button');
+import StarBorder from 'svg-icons/toggle/star-border';
+import IconButton from 'icon-button';
 
-let ComponentDoc = require('../../component-doc');
-let Code = require('grid-list-code');
-let CodeExample = require('../../code-example/code-example');
+import ComponentDoc from '../../component-doc';
+import Code from 'grid-list-code';
+import CodeExample from '../../code-example/code-example';
+import CodeBlock from '../../code-example/code-block';
 
 class GridListPage extends React.Component {
 
@@ -68,7 +69,7 @@ class GridListPage extends React.Component {
           },
           {
             name: 'titlePosition',
-            type: '"top"|"bottom"',
+            type: 'oneOf ["top", "bottom"]',
             header: 'optional',
             desc: 'Position of the title bar (container of title, subtitle and action icon). Defaults to "bottom".',
           },
@@ -86,7 +87,7 @@ class GridListPage extends React.Component {
           },
           {
             name: 'actionPosition',
-            type: '"left"|"right"',
+            type: 'oneOf ["left", "right"]',
             header: 'optional',
             desc: 'Position of secondary action IconButton. Defaults to "right".',
           },
@@ -185,6 +186,17 @@ class GridListPage extends React.Component {
         code={this.code}
         desc={this.desc}
         componentInfo={this.componentInfo}>
+
+        <Paper style = {{marginBottom: '22px'}}>
+          <CodeBlock>
+          {
+            '//Import statement:\nimport GridList from \'material-ui/lib/grid-list/grid-list\';\n' +
+            'import GridTile from \'material-ui/lib/grid-list/grid-tile\';\n\n' +
+            '//See material-ui/lib/index.js for more\n'
+          }
+          </CodeBlock>
+        </Paper>
+
         <CodeExample code={Code}>
           <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around'}}>
             {/* Basic grid list with mostly default options */}

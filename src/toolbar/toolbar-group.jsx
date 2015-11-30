@@ -16,6 +16,8 @@ const ToolbarGroup = React.createClass({
     className: React.PropTypes.string,
     float: React.PropTypes.string,
     style: React.PropTypes.object,
+    lastChild: React.PropTypes.bool,
+    firstChild: React.PropTypes.bool,
   },
 
   //for passing default theme context to children
@@ -23,7 +25,7 @@ const ToolbarGroup = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
@@ -35,7 +37,7 @@ const ToolbarGroup = React.createClass({
     };
   },
 
-  getInitialState () {
+  getInitialState() {
     return {
       muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
     };
@@ -43,7 +45,7 @@ const ToolbarGroup = React.createClass({
 
   //to update theme inside state whenever a new theme is passed down
   //from the parent / owner using context
-  componentWillReceiveProps (nextProps, nextContext) {
+  componentWillReceiveProps(nextProps, nextContext) {
     let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
     this.setState({muiTheme: newMuiTheme});
   },
@@ -67,7 +69,7 @@ const ToolbarGroup = React.createClass({
       dropDownMenu: {
         root: {
           float: 'left',
-          color: Colors.lightBlack,// removes hover color change, we want to keep it
+          color: Colors.lightBlack, // removes hover color change, we want to keep it
           display: 'inline-block',
           marginRight: this.getSpacing(),
         },

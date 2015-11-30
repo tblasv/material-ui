@@ -1,20 +1,20 @@
-let React = require('react');
-let { DropDownMenu } = require('material-ui');
-let ComponentDoc = require('../../component-doc');
-let Code = require('drop-down-menu-code');
-let CodeExample = require('../../code-example/code-example');
-
+import React from 'react';
+import {DropDownMenu, Paper} from 'material-ui';
+import ComponentDoc from '../../component-doc';
+import Code from 'drop-down-menu-code';
+import CodeExample from '../../code-example/code-example';
+import CodeBlock from '../../code-example/code-block';
 
 export default class DropDownMenuPage extends React.Component {
 
   render() {
 
     let menuItems = [
-      { payload: '1', text: 'Never' },
-      { payload: '2', text: 'Every Night' },
-      { payload: '3', text: 'Weeknights' },
-      { payload: '4', text: 'Weekends' },
-      { payload: '5', text: 'Weekly' },
+      {payload: '1', text: 'Never'},
+      {payload: '2', text: 'Every Night'},
+      {payload: '3', text: 'Weeknights'},
+      {payload: '4', text: 'Weekends'},
+      {payload: '5', text: 'Weekly'},
     ];
 
     let componentInfo = [
@@ -36,6 +36,13 @@ export default class DropDownMenuPage extends React.Component {
               'property you can choose another name.',
           },
           {
+            name: 'labelMember',
+            type: 'string',
+            header: 'default: text',
+            desc: 'DropDownMenu will use text as default value, with this ' +
+              'property you can choose another name.',
+          },
+          {
             name: 'autoWidth',
             type: 'bool',
             header: 'default: true',
@@ -51,8 +58,8 @@ export default class DropDownMenuPage extends React.Component {
           },
           {
             name: 'menuItemStyle',
-            type: 'array',
-            header: 'required',
+            type: 'object',
+            header: 'optional',
             desc: 'Overrides the inline-styles of the MenuItems when the ' +
                   'DropDownMenu is expanded.',
           },
@@ -113,12 +120,34 @@ export default class DropDownMenuPage extends React.Component {
       },
     ];
 
+    let menuItemsWithLabel = [
+      {payload: '1', text: 'Morning', period: '5 am - 12 pm'},
+      {payload: '2', text: 'Afternoon', period: '12 pm - 5 pm'},
+      {payload: '3', text: 'Evening', period: '5 pm to 9 pm'},
+      {payload: '4', text: 'Night', period: '9 pm to 4 am'},
+    ];
+
     return (
       <ComponentDoc
         name="Drop Down Menu"
         componentInfo={componentInfo}>
+
+        <Paper style = {{marginBottom: '22px'}}>
+          <CodeBlock>
+          {
+            '//Import statement:\nimport DropDownMenu from \'material-ui/lib/drop-down-menu\';\n\n' +
+            '//See material-ui/lib/index.js for more\n'
+          }
+          </CodeBlock>
+        </Paper>
+
         <CodeExample code={Code}>
-          <DropDownMenu menuItems={menuItems} />
+          <DropDownMenu menuItems={menuItems} /><br/>
+          <DropDownMenu
+            menuItems={menuItemsWithLabel}
+            labelMember="period"
+          />
+
         </CodeExample>
       </ComponentDoc>
     );

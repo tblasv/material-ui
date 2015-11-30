@@ -15,7 +15,7 @@ const Badge = React.createClass({
   childContextTypes: {
     muiTheme: React.PropTypes.object,
   },
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
@@ -64,13 +64,13 @@ const Badge = React.createClass({
         : theme.textColor;
 
     const radius = 12;
-    const radius2x = Math.floor(2*radius);
+    const radius2x = Math.floor(2 * radius);
 
     return {
       root: {
         position: 'relative',
         display: 'inline-block',
-        padding: [radius2x+'px', radius2x+'px', radius+'px', radius+'px'].join(' '),
+        padding: [radius2x + 'px', radius2x + 'px', radius + 'px', radius + 'px'].join(' '),
       },
       badge: {
         display: 'flex',

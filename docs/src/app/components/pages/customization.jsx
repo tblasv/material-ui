@@ -1,13 +1,13 @@
-let React = require('react');
-let PageWithNav = require('./page-with-nav');
+import React from 'react';
+import PageWithNav from './page-with-nav';
 
 export default class Customization extends React.Component {
 
   render() {
     let menuItems = [
-      { route: '/customization/themes', text: 'Themes'},
-      { route: '/customization/inline-styles', text: 'Inline Styles'},
-      { route: '/customization/colors', text: 'Colors'},
+      {route: '/customization/themes', text: 'Themes'},
+      {route: '/customization/inline-styles', text: 'Inline Styles'},
+      {route: '/customization/colors', text: 'Colors'},
     ];
 
     return (
